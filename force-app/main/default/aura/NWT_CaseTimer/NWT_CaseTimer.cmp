@@ -1,0 +1,41 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" controller="NWT_CaseTimer" access="global">
+     
+    
+   <!-- <ltng:require styles="{!$Resource.SLDS262 + '/styles/salesforce-lightning-design-system.css'}" />-->
+    
+    
+     <!-- Id of the Account the page hosting this component is showing -->
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="stopwatch" type="Object"/>
+    <aura:attribute name="vTime" type="Object"/>
+    <aura:attribute name="User" type="String"/>
+    <aura:attribute name="vUser" type="String"/>
+	<aura:attribute name="vHeures" type="String"/>
+    <aura:attribute name="vMinutes" type="String"/>
+    <aura:attribute name="vSecondes" type="String"/>
+    <aura:attribute name="vValue" type = "String" />
+    
+    <!-- Handle component initialization in a client-side controller -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   <!-- <aura:handler event="force:refreshView" action="{!c.isRefreshed}" />-->
+    
+     <lightning:card>
+        <div class="slds">
+            <div aura:id="timer" class="valeur slds-list_horizontal">
+                <lightning:icon iconName="utility:clock" size="small" class="icn"/>
+                <div  class="valeur">Current user: <span aura:id="User">{!v.User}</span></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div id="timer" class="textTitle">Timer: <span aura:id="time">{!v.vTime}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <ui:button aura:id="start" class="valeur slds-buttonstop slds-button_brand"  press="{!c.onClick}"><div aura:id="button" class="pause"> <p aura:id="valuestart" class="valeur">{!v.vValue}</p></div></ui:button>
+                </div>
+            </div>
+            <div aura:id="ticketverouiller" class=" valeur slds-list_horizontal">
+                <lightning:icon iconName="utility:clock" size="small" class="icn"/>
+                <div class="WarnText">Locked by <span aura:id="User">{!v.vUser}</span>&nbsp;(<span aura:id="Minutes">{!v.vMinutes}</span> minutes)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ui:button class="slds-button1 color-3 slds-button_brand" press="{!c.onRefresh}">Unlocking</ui:button></div>
+            </div>
+            <div aura:id="work" class="valeur slds-list_horizontal">
+                <div class="WarnText">Are you still working on this ticket?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ui:button aura:id="Yes" class="slds-button2 color-3 slds-button_brand"  press="{!c.onWork}">Yes</ui:button>&nbsp;&nbsp;&nbsp;<ui:button aura:id="No" class="slds-button2 color-3 slds-button_brand"  press="{!c.onWork}">Non</ui:button></div>
+            </div>
+       </div>
+   </lightning:card>
+</aura:component>
