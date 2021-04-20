@@ -25,6 +25,5 @@ public class NWT_ActiveTimer {
         if (checkUpdate) {
             update caseTimerListToUpdate;  
         }
-
     }
 }
