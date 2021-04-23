@@ -1,11 +1,13 @@
 ({ 
     //initialisation Automatique
 	doInit : function (component, event, helper) {  
+     
         //A l'ouverture recupèrer l'id de l'atelier
 		var idObject = component.get("v.recordId");
         var resultequipeautorise;
         //ETAPE 1 : Verification de l'atelier si il est cloturé (1 requete)
 		function atelierfermer(atelier){
+            console.log('atelierfermer');
             //Execute la classe cloturer (1 Requete SOQL)
         	var vClose = component.get("c.Cloturer");
         	vClose.setParams({
@@ -26,6 +28,7 @@
 		}
         //ETAPE 2 : Verification si l'atelier est verrouillé par qqun (1 requete)
         function atelierverouille(atelier){
+            console.log('atelierverouille');
             //execute la classe atelierverouiller
             var vAtelierVerouiller = component.get("c.atelierverouiller");
             if(typeof vAtelierVerouiller != 'undefined'){
@@ -42,6 +45,7 @@
         	}
         }
         function affichageatelierverouille(atelier, resultatelierverouiller){
+            console.log('affichageatelierverouille');
         	if(resultatelierverouiller != null){
            		//on sépare le resultat retournée dans un tableau
                 var atelierverouiller = (resultatelierverouiller.split(':'));
@@ -69,6 +73,7 @@
 			}
             //sinon
             else{
+                console.log('affichageatelierverouille else');
                 //déclaration d'une variable element
                 var element;
 				//on recherche l'element timer dans le composant
@@ -81,6 +86,7 @@
         }
         //ETAPE 2 Verification si l'equipe est autorisé a lancer le timer automatiquement (1 requete)
         function equipeautorise(atelier){
+            console.log('equipeautorise ');
             //execute la classe EquipeParam
             var vEquipeParam = component.get("c.EquipeParam");
             //recupère la valeur retourner par la classe
@@ -93,8 +99,10 @@
         	$A.enqueueAction(vEquipeParam);
         }
         function affichageequipeautorise(atelier){
+            console.log('affichageequipeautorise ');
             var id = "FirstStart";
             //Lance le compteur
+            console.log(resultequipeautorise);
             if(resultequipeautorise != null)
             {
             	if(resultequipeautorise != false){ 
@@ -122,8 +130,7 @@
                     component.set("v.vValue","FirstStart");
 				}
             }
-            else
-            {
+            else {
                 	component.set("v.vTime", "00:00:00");
                     var element;
                     //récupere le composant button
@@ -155,12 +162,10 @@
        	var idObject = component.get("v.recordId");
 		var id = component.get("v.vValue");
         var vid;
-        if(id == "Stop")
-        {
+        if (id == "Stop") {
             vid = "Stop";
         }
-        if(id == "Start")
-        {
+        if (id == "Start") {
             vid = "Start";
         }
         //lance la fonction principal
@@ -194,12 +199,10 @@
                 $A.util.removeClass(element1, 'valeur');
                 var id = component.get("v.vValue");
         		var vid;
-        		if(id === "Start")
-        		{
+        		if(id === "Start") {
                     vid = "Start";
                 }
-                else
-                {
+                else {
                 	//modifier la valeur dans valuestart par FirstStart
                 	vid = "FirstStart"; 
                 }
@@ -209,5 +212,26 @@
          }
          //lance la fonction refresh
          refresh(idObject);
-	}
+	},
+
+     //Action manuel / Clique Bouton OUI / NON
+     onWork : function (component, event, helper){
+        //recupère l'id du ticket
+		var idObject = component.get("v.recordId");
+        //recupere la valeur choisi par l'utilisateur
+        var id = event.getSource().getLocalId();
+        var vid;
+        //si c'est égal a oui
+        if (id === "Yes") {
+            //modifier la valeur dans valuestart par Oui
+             vid = "Yes";
+        }
+        //si c'est égal a non
+        if (id === "No") {
+            //modifier la valeur dans valuestart par Non
+             vid = "No";
+        }
+        //lance la fonction principal
+		helper.doTimer(component, event, idObject, vid);   
+    },
 })

@@ -12,7 +12,7 @@ public class NWT_CaseTimer {
     @AuraEnabled
     public static Boolean EquipeParam(){
         Boolean result;
-        id user = UserInfo.getUserId();
+        Id user = UserInfo.getUserId();
         try{    
             User Equipe = [SELECT Equipe_Nowteam__c from User where id=:user];
             NWT_CaseTimer_settings__c Equip_Param = [SELECT IsActive_Ticket__c from NWT_CaseTimer_settings__c where Nom_de_equipe__c=:Equipe.Equipe_Nowteam__c];
@@ -25,12 +25,12 @@ public class NWT_CaseTimer {
     }
     
     @AuraEnabled
-    public static boolean Cloturer(id idObject){
-        boolean value;
+    public static Boolean Cloturer(Id idObject){
+        Boolean value;
         try{
-            Case ticket = [SELECT IsClosed from Case where id=:idObject];
+            Case ticket = [SELECT IsClosed FROM Case WHERE Id =: idObject];
             value = ticket.IsClosed;
-        }catch(Exception ex){
+        } catch(Exception ex){
             ex.getMessage(); 
         }
         return value;
@@ -43,8 +43,7 @@ public class NWT_CaseTimer {
         Datetime tempsFin  = Datetime.now();
         String dates = tempsFin.format('dd/MM/yyyy');
         String verouillerticket;
-        string username = UserInfo.getUserId();
-        
+        String username = UserInfo.getUserId();
         
         List<NWT_Case_Timer__c> ticketverouiller = [SELECT IsActiveTimer__c, User__r.Name, TimeSession_Sec__c
                                                     FROM NWT_Case_Timer__c
@@ -52,8 +51,8 @@ public class NWT_CaseTimer {
                                                     AND CreatedDate__c=:dates 
                                                     AND User__c !=: username];
         
-        for(NWT_Case_Timer__c a : ticketverouiller) {
-            if(a != null && a.IsActiveTimer__c == true) {
+        for (NWT_Case_Timer__c a : ticketverouiller) {
+            if (a != null && a.IsActiveTimer__c == true) {
                 verouillerticket = a.IsActiveTimer__c + ':' + a.User__r.Name + ':' + a.TimeSession_Sec__c;
                 break;
             }
@@ -63,18 +62,18 @@ public class NWT_CaseTimer {
     
     @AuraEnabled
     public static String deverouillerticket(Id idObject){
-        Datetime tempsFin  = Datetime.now();
+        Datetime tempsFin = Datetime.now();
         String dates = tempsFin.format('dd/MM/yyyy');
         String timer;
         string username = UserInfo.getUserId();
         List<NWT_Case_Timer__c> ticketverouiller = [SELECT Name, IsActiveTimer__c
                                                     FROM NWT_Case_Timer__c
                                                     WHERE Ticket__c=:idObject
-                                                    AND CreatedDate__c=:dates
-                                                    AND User__c !=:username];
+                                                        AND CreatedDate__c =: dates
+                                                        AND User__c !=: username];
         
-        for(NWT_Case_Timer__c a : ticketverouiller) {
-            if(a!=null && a.IsActiveTimer__c == true) {
+        for (NWT_Case_Timer__c a : ticketverouiller) {
+            if (a != null && a.IsActiveTimer__c == true) {
                 timer = a.Name;
                 a.IsActiveTimer__c = false;
                 update a;
@@ -94,15 +93,14 @@ public class NWT_CaseTimer {
         List<NWT_Case_Timer__c> temps = [SELECT Name
                                          FROM NWT_Case_Timer__c
                                          WHERE Ticket__c =: idObject
-                                         AND User__c =:username
-                                         AND CreatedDate__c=:dates];
+                                            AND User__c =:username
+                                            AND CreatedDate__c=:dates];
         
-        for(NWT_Case_Timer__c t : temps) {
-            if(temps != null) {
+        for (NWT_Case_Timer__c t : temps) {
+            if (temps != null) {
                 stp = t.Name;
                 break;
             }
-            system.debug(t.Name);
         }
         return stp;
     }
@@ -114,14 +112,14 @@ public class NWT_CaseTimer {
         List<Integer> integerList = NWT_CaseTimer.toInteger(stopwatch);
         
         Time myTime;
-        if(integerList != null && !integerList.IsEmpty()) {
+        if (integerList != null && !integerList.IsEmpty()) {
             myTime = Time.newInstance(integerList[0], integerList[1], integerList[2],0);   
         }
         
-        Integer  timeSec = (myTime.hour()*3600 )+ (myTime.minute()*60) + (myTime.second());
+        Integer timeSec = (myTime.hour()*3600 )+ (myTime.minute()*60) + (myTime.second());
         DateTime tempsDebut = tempsFin.addSeconds(-timeSec);
         Id user = UserInfo.getUserId();
-        
+        System.debug('saveTime');
         try {
             NWT_Case_Timer__c stp = new NWT_Case_Timer__c();
             stp.Ticket__c=idObject;
@@ -132,26 +130,27 @@ public class NWT_CaseTimer {
             stp.TimeSession_Sec__c = 0;
             stp.TimeTotal_Sec__c = 0;
             stp.IsActiveTimer__c = true;
-            system.debug('time' +myTime);
-            system.debug('stp' + stp);
             insert stp;
+            System.debug(stp);
         } catch(Exception ex){
             ex.getMessage();
         }
         
-        Case ticket = [SELECT Id, Utilisateur_Courant__c FROM case WHERE Id =: idObject];
-        if(ticket != null) {
+        Case ticket = [SELECT Id, Utilisateur_Courant__c FROM Case WHERE Id =: idObject];
+        if (ticket != null) {
             ticket.Utilisateur_Courant__c = null;
             update ticket;
         }
     }
     
     @AuraEnabled
-    public static void updatetimerencours(Boolean timer, string idStp){
+    public static void updatetimerencours(Boolean timer, String idStp){
         try{
+            System.debug('updateTimerEncours');
             NWT_Case_Timer__c timerencours = [SELECT IsActiveTimer__c FROM NWT_Case_Timer__c WHERE Name=:idStp];
-            timerencours.IsActiveTimer__c=timer;
+            timerencours.IsActiveTimer__c = timer;
             update timerencours;
+            System.debug(timerencours);
         } catch(Exception ex){
             ex.getMessage();
         }
@@ -172,7 +171,6 @@ public class NWT_CaseTimer {
     @AuraEnabled
     public static void updateTimeat0 (String stopwatch, String idStp){
         Datetime tempsFin = Datetime.now();
-        System.debug('tempsFin ' + tempsFin);
         String dates = tempsFin.format('dd/MM/yyyy');
         List<Integer> integerList = NWT_CaseTimer.toInteger(stopwatch);
         
@@ -183,16 +181,14 @@ public class NWT_CaseTimer {
         
         Integer timeSec = (myTime.hour()*3600 )+ (myTime.minute()*60) + (myTime.second());
         
-        string stp; 
+        String stp; 
         try{
             NWT_Case_Timer__c tempsexistant = [SELECT Name, LastModifiedDate__c, TimeSession_Sec__c, TimeTotal_Sec__c
                                                FROM NWT_Case_Timer__c
                                                WHERE Name =: idStp];
-            System.debug('tempsexistant ' + tempsexistant);
-            tempsexistant.LastModifiedDate__c=tempsFin;
-            System.debug('LastModifiedDate__c ' + tempsexistant.LastModifiedDate__c);
+            tempsexistant.LastModifiedDate__c = tempsFin;
             tempsexistant.TimeSession_Sec__c = 0;
-            tempsexistant.TimeTotal_Sec__c	= tempsexistant.TimeTotal_Sec__c + 0;
+            tempsexistant.TimeTotal_Sec__c = tempsexistant.TimeTotal_Sec__c + 0;
             update tempsexistant;
         } catch(Exception ex){
             ex.getMessage();
@@ -213,7 +209,7 @@ public class NWT_CaseTimer {
         Integer timeSec = (myTime.hour()*3600 )+ (myTime.minute()*60) + (myTime.second());
         
         String stp;
-        try{
+        try {
             NWT_Case_Timer__c tempsexistant = [SELECT Name,LastModifiedDate__c,TimeSession_Sec__c,TimeTotal_Sec__c
                                                FROM NWT_Case_Timer__c
                                                WHERE Name =: idStp];
@@ -230,7 +226,7 @@ public class NWT_CaseTimer {
     public static list<integer> toInteger(String text) {
         List<Integer> integerList = new List<Integer>();
         List<String> lstAlpha = text.split(':');
-        for(String c:lstAlpha) {
+        for (String c : lstAlpha) {
             integerList.add(integer.valueOf(c));
         }
         return integerList;
@@ -243,7 +239,7 @@ public class NWT_CaseTimer {
     
     @AuraEnabled
     public static String getNTicket(id idObject){
-        Datetime tempsFin  = Datetime.now();
+        Datetime tempsFin = Datetime.now();
         String dates = tempsFin.format('dd/MM/yyyy');
         String NTicket;
         String username = UserInfo.getUserId();
@@ -251,8 +247,8 @@ public class NWT_CaseTimer {
                                           FROM NWT_Case_Timer__c
                                           WHERE Ticket__c =: idObject
                                           AND User__c =: username AND CreatedDate__c =: dates];
-        for(NWT_Case_Timer__c t : ticket) {
-            if(t!=null) {
+        for (NWT_Case_Timer__c t : ticket) {
+            if (t != null) {
                 NTicket = t.Ticket__r.CaseNumber;
             }
         }
@@ -260,7 +256,7 @@ public class NWT_CaseTimer {
     }
     
     @AuraEnabled
-    public static void insertUser(id idObject){
+    public static void insertUser(Id idObject){
         Case ticket = [SELECT Id, Utilisateur_Courant__c FROM Case WHERE Id=:idObject];
         if(ticket != null && ticket.Utilisateur_Courant__c == null){
             ticket.Utilisateur_Courant__c=userInfo.getUserId();

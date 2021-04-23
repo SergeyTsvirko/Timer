@@ -15,7 +15,7 @@
             //Get the value returned by the class
          	vClose.setCallback(this, function(pClose) {
                 // f the result is equal to true
-         		if(pClose.getReturnValue() != true) {
+         		if (pClose.getReturnValue() != true) {
                     //Launch the ticketverouille function with the ticket id as a parameter
 					ticketverouille(ticket);
             	}
@@ -41,7 +41,7 @@
         }
 
         function affichageticketverouiller(ticket){
-            if(resultticketverouiller != null){
+            if (resultticketverouiller != null){
            		//we separate the returned result in an array
                 var ticketverouiller = (resultticketverouiller.split(':'));
                 //we retrieve the first value of the array which contains if a timer is in progress
@@ -58,18 +58,16 @@
                 component.set("v.vUser", user);
                 //envoie le résultat des minutes dans le composant
                 component.set("v.vMinutes", minutes);
-                //déclaration d'une variable element
-                var element;
                 //on recherche l'element ticketverouiller dans le composant
-                element = component.find("ticketverouiller");
+                var element = component.find("ticketverouiller");
                 //Afficher le verrouillage du ticket
                 //on lui retire la class valeur qui permet d'afficher le composant
                 $A.util.removeClass(element, 'valeur');
 			}
             //sinon
-            else{
+            else {
                 //on recherche l'element timer dans le composant
-                 var element = component.find("timer");
+                var element = component.find("timer");
                 //on lui retire la class valeur qui permet d'afficher le composant
                 $A.util.removeClass(element, 'valeur');
                 //on lance la fonction equipeautorise avec en paramètre l'id du ticket
@@ -77,11 +75,11 @@
         	}
         }
         //ETAPE 3 Verification si l'equipe est autorisé a lancer le timer automatiquement (1 requete)
-        function equipeautorise(ticket){
+        function equipeautorise(ticket) {
              resultequipeautorise = true;
              affichageequipeautorise(ticket);
             //execute la classe EquipeParam
-         /*   var vEquipeParam = component.get("c.EquipeParam");
+            /*   var vEquipeParam = component.get("c.EquipeParam");
             //recupère la valeur retourner par la classe
 			vEquipeParam.setCallback(this, function(pEquipeParam) {
                 //si le résultat est différent de null
@@ -94,18 +92,16 @@
         function affichageequipeautorise(ticket){
             var id = "FirstStart";
             //Lance le compteur
-            if(resultequipeautorise != null)
-            {
-            	if(resultequipeautorise != false) { 
+            if (resultequipeautorise != null) {
+            	if (resultequipeautorise != false) { 
             		//on execute la fonction dotimer présent dans le helper
                 	helper.doTimer(component, event, ticket, id); 
             	}
             	//Afficher le bouton START / STOP
             	else {
                     component.set("v.vTime", "00:00:00");
-                    var element;
                     //récupere le composant button
-                    element = component.find("button");
+                    var element = component.find("button");
                     //cache le bouton pause
                     $A.util.removeClass(element, 'pause');
                     //affiche le bouton start
@@ -119,29 +115,25 @@
                     component.set("v.vValue","FirstStart");
 				}
             } else {
-                	component.set("v.vTime", "00:00:00");
-                    var element;
-                    //récupere le composant button
-                    element = component.find("button");
-                    //cache le bouton pause
-                    $A.util.removeClass(element, 'pause');
-                    //affiche le bouton start
-                    $A.util.addClass(element, 'start');
-                    //déclaration d'une variable element1
-                    var element1;
-                    //recupère le composant start
-                    element1 = component.find("start");
-                    //cache le bouton pause
-                    $A.util.removeClass(element1, 'slds-buttonstop');
-                    //affiche le bouton start
-                    $A.util.addClass(element1, 'slds-buttonstart');
-                    component.set("v.vValue","FirstStart");
+                component.set("v.vTime", "00:00:00");
+                //récupere le composant button
+                var element = component.find("button");
+                //cache le bouton pause
+                $A.util.removeClass(element, 'pause');
+                //affiche le bouton start
+                $A.util.addClass(element, 'start');
+                //recupère le composant start
+                var element1 = component.find("start");
+                //cache le bouton pause
+                $A.util.removeClass(element1, 'slds-buttonstop');
+                //affiche le bouton start
+                $A.util.addClass(element1, 'slds-buttonstart');
+                component.set("v.vValue","FirstStart");
             }
         //fin de la fonction 
         }
         //on lance la fonction ticket fermer avec en paramètre l'id du ticket
         ticketfermer(idObject);
-        
     //fin de la fonction doinit
     },	
     //Action manuel / Clique Bouton Start / Stop
@@ -151,13 +143,13 @@
        	var idObject = component.get("v.recordId");
 		var id = component.get("v.vValue");
         var vid;
-        if(id == "FirstStart") {
+        if (id == "FirstStart") {
             vid = "FirstStart";
         }
-        if(id == "Stop") {
+        if (id == "Stop") {
             vid = "Stop";
         }
-        if(id == "Start") {
+        if (id == "Start") {
             vid = "Start";
         }
         //lance la fonction principal
@@ -170,29 +162,26 @@
         var idObject = component.get("v.recordId");
         //lance la fonction principal
         //fonction refresh
-        function refresh(ticket){
+        function refresh(ticket) {
        		//recupere la classe deverouillerticket
             var vdeverouillerticket = component.get('c.deverouillerticket');
-            if(typeof vdeverouillerticket != 'undefined'){
+            if (typeof vdeverouillerticket != 'undefined'){
         		vdeverouillerticket.setParams({
         			"idObject" : ticket
         		});
                 //ferme la classe ticketdeverouilleticket
                 $A.enqueueAction(vdeverouillerticket);
-                //déclaration d'un variable element
-                var element;
                 //recupere le composant ticketverouiller
-                element = component.find("ticketverouiller");
+                var element = component.find("ticketverouiller");
                 //cache le composant
                 $A.util.addClass(element, 'valeur');
                 //déclaration d'une variable element1
-                var element1;
-                element1 = component.find("timer");
+                var element1 = component.find("timer");
                 //affiche le composant
                 $A.util.removeClass(element1, 'valeur');
                 var id = component.get("v.vValue");
         		var vid;
-        		if(id === "Start") {
+        		if (id === "Start") {
                     vid = "Start";
                 } else {
                 	//modifier la valeur dans valuestart par FirstStart
@@ -214,12 +203,12 @@
         var id = event.getSource().getLocalId();
         var vid;
         //si c'est égal a oui
-        if(id === "Yes") {
+        if (id === "Yes") {
             //modifier la valeur dans valuestart par Oui
              vid = "Yes";
         }
         //si c'est égal a non
-        if(id === "No") {
+        if (id === "No") {
             //modifier la valeur dans valuestart par Non
              vid = "No";
         }
