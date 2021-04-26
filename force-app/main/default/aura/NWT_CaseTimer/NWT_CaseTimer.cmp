@@ -18,13 +18,13 @@
     
     <!-- Handle component initialization in a client-side controller -->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-   <!-- <aura:handler event="force:refreshView" action="{!c.isRefreshed}" />-->
+    <!-- <aura:handler event="force:refreshView" action="{!c.isRefreshed}" />-->
     
      <lightning:card>
         <div class="slds">
             <div aura:id="timer" class="valeur slds-list_horizontal">
                 <lightning:icon iconName="utility:clock" size="small" class="icn"/>
-                <div  class="valeur">Current user: <span aura:id="User">{!v.User}</span></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="valeur">Current user: <span aura:id="User">{!v.User}</span></div>&nbsp;&nbsp;&nbsp;&nbsp;
                 <div id="timer" class="textTitle">Timer: <span aura:id="time">{!v.vTime}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <ui:button aura:id="start" class="valeur slds-buttonstop slds-button_brand"  press="{!c.onClick}"><div aura:id="button" class="pause"> <p aura:id="valuestart" class="valeur">{!v.vValue}</p></div></ui:button>
                 </div>

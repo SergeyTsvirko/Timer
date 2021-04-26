@@ -122,9 +122,7 @@
                         if (vStateStp != null) {
                             //execute la fonction udpatestp avec en paramètre le numéro du stp
                             updatestp(vStateStp);
-                        }
-                        //sinon
-                        else {
+                        } else {
                             //execute la fonction createstp avec en paramètre l'id du ticket
                             createstp(ticket)
                         }
@@ -176,7 +174,7 @@
                 }
         	}
          
-        	function ticketverouille(ticket){
+        	function ticketverouille(ticket) {
                 //execute la classe ticketverouiller
                 var vTicketVerouiller = component.get("c.ticketverouiller");
                 if (typeof vTicketVerouiller != 'undefined'){
@@ -212,9 +210,7 @@
                             //modifier la valeur dans valuestart par Start
                             component.set("v.vValue","Start");
                             x.stop();
-                    	}
-                        //sinon
-                        else {
+                    	} else {
                             //on recupere le composant timer
                             var element = component.find("timer");
                             //on affiche le composant
@@ -303,7 +299,7 @@
                 }
             }
          
-            function timemax(){
+            function timemax() {
                 //arret du timer
                 x.stop();
                 //récupére le composant dont l'aura:id est work
@@ -349,7 +345,7 @@
                     //on split le résultat récupérer dans la variable time
 					var timer = time.split(':');  
                     //si le temps contenue dans timer[1] est égal a newtime
-                	if (newtime == timer[1]){
+                	if (newtime == timer[1]) {
                         //si le timer[1] est inférieur a 9
                 		if (timer[1] < 9){
                             //on incrémente la variable s2
@@ -360,7 +356,7 @@
                             ticketverouille(vticket);
                     	}
                         //si le timer[1] est égal a 9
-                    	if (timer[1] == 9){
+                    	if (timer[1] == 9) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 1;
                         	s2 = 0;
