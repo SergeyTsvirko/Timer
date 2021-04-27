@@ -34,7 +34,7 @@
         <div class="WarnText">Verrouillé par <span aura:id="User">{!v.vUser}</span>&nbsp;(<span aura:id="Minutes">{!v.vMinutes}</span> minutes)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ui:button class="slds-button1 color-3 slds-button_brand" press="{!c.onRefresh}">Déverouiller</ui:button></div>
         </div>
     <div aura:id="work" class="valeur slds-list_horizontal">
-    	<div class="WarnText">Travaillez-vous toujours sur ce tache ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ui:button aura:id="oui" class="slds-button2 color-3 slds-button_brand"  press="{!c.onWork}">Oui</ui:button>&nbsp;&nbsp;&nbsp;<ui:button aura:id="non" class="slds-button2 color-3 slds-button_brand"  press="{!c.onWork}">Non</ui:button></div>
+    	<div class="WarnText">Travaillez-vous toujours sur cette tache ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ui:button aura:id="oui" class="slds-button2 color-3 slds-button_brand"  press="{!c.onWork}">Oui</ui:button>&nbsp;&nbsp;&nbsp;<ui:button aura:id="non" class="slds-button2 color-3 slds-button_brand"  press="{!c.onWork}">Non</ui:button></div>
     </div>
    </div>
    </lightning:card>

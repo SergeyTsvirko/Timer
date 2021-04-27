@@ -70,7 +70,6 @@
             var valuenatelier;
             //déclaration d'une variable s1 instencié a 0
             var message = "true";
-
             var s1 = 0;
             //déclaration d'une variable s2 instencié a 1
             var s2 = 1;
@@ -89,7 +88,7 @@
             //affiche le bouton stop
             $A.util.addClass(element1, 'slds-buttonstop');
             //fonction recuperation du numéro de ticket
-            function natelier(atelier){
+            function natelier(atelier) {
                 //execute la classe getNAtelier
                 var vGetNAtelier = component.get("c.getNAtelier");
                 if (typeof vGetNAtelier != 'undefined'){
@@ -106,7 +105,7 @@
                 }    
             }
             //fonction crée ou modifier le atp
-            function atp(atelier){
+            function atp(atelier) {
                 //execute la classe getSuiviTime
         		var vGetAtp = component.get("c.getSuiviTime");
                 if (typeof vGetAtp != 'undefined'){
@@ -133,7 +132,7 @@
                 }
         	}
             //fonction creation du atp
-        	function createatp(atelier){
+        	function createatp(atelier) {
                 //execute la fonction saveTime
             	var vSaveFunction = component.get("c.saveTime");
                 if (typeof vSaveFunction != 'undefined'){
@@ -146,14 +145,13 @@
                     vSaveFunction.setCallback(this, function(pResponse) {
                         //recupère l'etat du résultat et le stock dans la variable vState
                         var vState = pResponse.getState(); 
-                        console.log('############ vState ' + vState);
                     //on ferme la classe saveTime
                     });
                     $A.enqueueAction(vSaveFunction);
                 }
         	}
             //fonction mise a jour du atp
-        	function updateatp(atp){
+        	function updateatp(atp) {
                 //execute la classe updateAtelierat0
             	var vUpdateFunction = component.get("c.updateAtelierat0");
                 if (typeof vUpdateFunction != 'undefined'){
@@ -228,7 +226,7 @@
                 }
         	}
             //fonction enregistrement du temps
-            function save(time){
+            function save(time) {
                 //déclaration d'une variable vtime avec le temps a enregistré sois 1 min
             	var vTime = "00:01:00";
                 //execute la classe updateTimeAtelier
@@ -325,10 +323,10 @@
                 //recupere le temps en cours sur le composant v.vtime
                 time = component.get("v.vTime");
                 // si valuestp est égal null
-                if (valueatp == null){
+                if (valueatp == null) {
                     //execute la class getSuiviTime
                 	var vGetAtp = component.get("c.getSuiviTime");
-                    if (typeof vGetAtp != 'undefined'){
+                    if (typeof vGetAtp != 'undefined') {
          				vGetAtp.setParams({
             				"idObject" : vatelier
           				});
@@ -344,23 +342,11 @@
                     }
                 }
                 //si le type contenue dans la varialbe time est différent de undefined
-                if (typeof time != "undefined"){
+                if (typeof time != "undefined") {
                     //on split le résultat récupérer dans la variable time
 					var timer = time.split(':');  
                     //si le temps contenue dans timer[1] est égal a newtime
                 	if (newtime == timer[1]) {
-                        if (timer[1] == 9) {
-                            //on met la variable s1 a 0 et la variable s2 a 1
-                    		s1 = 0;
-                        	s2 = 1;
-                            //on met a jour la variable newtime
-                        	newtime = pad(s1, 1) + pad(s2, 1);
-                            save(time);
-                      //      atelierverouille(vatelier);
-                         //   message = "true";
-                         //   timemax();
-                        }
-
                         //si le timer[1] est inférieur a 9
                 		if ((timer[1] >= 1 && timer[1] < 9) || (timer[1] >= 10 && timer[1] <19) || (timer[1] >= 20 && timer[1] <29) || (timer[1] >= 30 && timer[1] <39) || (timer[1] >= 40 && timer[1] <49) || (timer[1] >= 50 && timer[1] <59)){
                             //on incrémente la variable s2
@@ -371,8 +357,7 @@
                             atelierverouille(vatelier);
                     	}
                         //si le timer[1] est égal a 9
-                        // (timer[1] == 9) ||
-                    	if ( (timer[1] == 19) || (timer[1] == 29) || (timer[1] == 39) || (timer[1] == 49)){
+                    	if ((timer[1] == 9) || (timer[1] == 19) || (timer[1] == 29) || (timer[1] == 39) || (timer[1] == 49)){
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = s1 + 1;
                         	s2 = 0;
@@ -388,12 +373,12 @@
                             //on met a jour la variable newtime
                         	newtime = pad(s1, 1) + pad(s2, 1);
                             save(time);
-                      //      atelierverouille(vatelier);
-                          //  message = "true";
+                            atelierverouille(vatelier);
+                            //message = "true";
                             //timemax();
                         }
                         //si le timer[1] est égal a 20
-                    /*	if (timer[1] == 0) {
+                    	if (timer[1] == 0) {
                             //on met la variable s1 a 0 et la variable s2 a 1
                     		s1 = 0;
                         	s2 = 1;
@@ -401,12 +386,10 @@
                         	newtime = pad(s1, 1) + pad(s2, 1);
                             save(time);
                             atelierverouille(vatelier);
-                          //  timemax();
-                    	}*/
+                    	}
                         //lance la fonction save
                     } 
-                }
-                else {
+                } else {
                     //stop la fonction timer
                 	clearInterval(clocktimer);
                 }
@@ -415,7 +398,7 @@
             atp(vatelier);
             //modifier la valeur dans valuestart par stop
             component.set("v.vValue","Stop");
-           	if(!stopwatch){
+           	if (!stopwatch) {
         		component.set("v.stopwatch", x);
         	}
             //initialise la fonction timer
@@ -426,7 +409,7 @@
         //si la valeur recupérer est égal a Start
         if (vid === "Start") {
             //fonction atelierverouiller
-            function atelierverouille(atelier){
+            function atelierverouille(atelier) {
                 //execute la classe ticketverouiller
                 var vAtelierVerouiller = component.get("c.atelierverouiller");
                 if (typeof vAtelierVerouiller != 'undefined'){
@@ -478,7 +461,7 @@
                 }
         	}
             //fonction crée ou modifier le atp
-            function atp(atelier){
+            function atp(atelier) {
                 //execute la classe getSuiviTime
         		var vGetAtp = component.get("c.getSuiviTime");
                 if (typeof vGetAtp != 'undefined'){
@@ -502,7 +485,7 @@
                 }
         	}
             //fonction updatimer
-            function updateatp(atp){
+            function updateatp(atp) {
                 //execute la classe ResetTempsAtelier
                 var vUpdateTempsAtelier = component.get("c.ResetTempsAtelier");
                 if (typeof vUpdateTempsAtelier != 'undefined'){
@@ -517,7 +500,7 @@
                 }
             }
 
-            function start(){
+            function start() {
                 //démarre le timer
                 x.start();
                 //recupére le composant button
@@ -537,7 +520,7 @@
 			atelierverouille(vatelier);
         }
         //si la valeur recupérer est égal a Stop
-        if (vid === "Stop"){
+        if (vid === "Stop") {
             function atp(atelier){
                 //execute la classe getSuiviTime
         		var vGetAtp = component.get("c.getSuiviTime");
@@ -562,7 +545,7 @@
                 }
         	}
             //fonction updatimer
-            function updateatp(atp){
+            function updateatp(atp) {
                 //execute la classe ResetTempsAtelier
                 var vUpdateTempsAtelier = component.get("c.ResetTempsAtelier");
                 if (typeof vUpdateTempsAtelier != 'undefined'){
@@ -577,7 +560,7 @@
                 }
             }
             //fonction stop
-            function stop(){
+            function stop() {
                 //stop le timer
                 x.stop();
                 //récupere le composant button

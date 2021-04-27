@@ -6,7 +6,7 @@
         var resultticketverouiller;
         var resultequipeautorise;
         //ETAPE 1 : Verification of the ticket if it is closed (1 request)
-		function ticketfermer(ticket){
+		function ticketfermer(ticket) {
             //Execute la classe cloturer (1 Requete SOQL)
         	var vClose = component.get("c.Cloturer");
         	vClose.setParams({
@@ -26,7 +26,7 @@
         function ticketverouille(ticket){
             //execute the ticketlock class
             var vTicketVerouiller = component.get("c.ticketverouiller");
-            if(typeof vTicketVerouiller != 'undefined'){
+            if (typeof vTicketVerouiller != 'undefined'){
                 vTicketVerouiller.setParams({
                     "idObject" : ticket
                 });
@@ -40,8 +40,8 @@
         	}
         }
 
-        function affichageticketverouiller(ticket){
-            if (resultticketverouiller != null){
+        function affichageticketverouiller(ticket) {
+            if (resultticketverouiller != null) {
            		//we separate the returned result in an array
                 var ticketverouiller = (resultticketverouiller.split(':'));
                 //we retrieve the first value of the array which contains if a timer is in progress
@@ -89,15 +89,15 @@
             });
         	$A.enqueueAction(vEquipeParam);*/
         }
-        function affichageequipeautorise(ticket){
+
+        function affichageequipeautorise(ticket) {
             var id = "FirstStart";
             //Lance le compteur
             if (resultequipeautorise != null) {
             	if (resultequipeautorise != false) { 
             		//on execute la fonction dotimer présent dans le helper
                 	helper.doTimer(component, event, ticket, id); 
-            	}
-            	//Afficher le bouton START / STOP
+            	} //Afficher le bouton START / STOP
             	else {
                     component.set("v.vTime", "00:00:00");
                     //récupere le composant button
@@ -196,7 +196,7 @@
 	},
     
     //Action manuel / Clique Bouton OUI / NON
-    onWork : function (component, event, helper){
+    onWork : function (component, event, helper) {
         //recupère l'id du ticket
 		var idObject = component.get("v.recordId");
         //recupere la valeur choisi par l'utilisateur

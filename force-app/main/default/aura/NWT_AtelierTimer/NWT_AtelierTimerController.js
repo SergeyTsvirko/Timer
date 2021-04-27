@@ -5,8 +5,7 @@
 		var idObject = component.get("v.recordId");
         var resultequipeautorise;
         //ETAPE 1 : Verification de l'atelier si il est cloturé (1 requete)
-		function atelierfermer(atelier){
-            console.log('atelierfermer');
+		function atelierfermer(atelier) {
             //Execute la classe cloturer (1 Requete SOQL)
         	var vClose = component.get("c.Cloturer");
         	vClose.setParams({
@@ -25,8 +24,7 @@
         //fin de la fonction  
 		}
         //ETAPE 2 : Verification si l'atelier est verrouillé par qqun (1 requete)
-        function atelierverouille(atelier){
-            console.log('atelierverouille');
+        function atelierverouille(atelier) {
             //execute la classe atelierverouiller
             var vAtelierVerouiller = component.get("c.atelierverouiller");
             if (typeof vAtelierVerouiller != 'undefined'){
@@ -42,8 +40,8 @@
                 $A.enqueueAction(vAtelierVerouiller);
         	}
         }
-        function affichageatelierverouille(atelier, resultatelierverouiller){
-        	if (resultatelierverouiller != null){
+        function affichageatelierverouille(atelier, resultatelierverouiller) {
+        	if (resultatelierverouiller != null) {
            		//on sépare le resultat retournée dans un tableau
                 var atelierverouiller = (resultatelierverouiller.split(':'));
                 //on récupére la première valeur du tableau qui contient si un timer est en cours
@@ -65,9 +63,7 @@
                 //Afficher le verrouillage du ticket 
                 //on lui retire la class valeur qui permet d'afficher le composant
                 $A.util.removeClass(element, 'valeur');
-			}
-            //sinon
-            else{
+			} else {
 				//on recherche l'element timer dans le composant
                 var element = component.find("timer");
                 //on lui retire la class valeur qui permet d'afficher le composant
@@ -77,7 +73,7 @@
 			}
         }
         //ETAPE 2 Verification si l'equipe est autorisé a lancer le timer automatiquement (1 requete)
-        function equipeautorise(atelier){
+        function equipeautorise(atelier) {
             //execute la classe EquipeParam
             var vEquipeParam = component.get("c.EquipeParam");
             //recupère la valeur retourner par la classe
@@ -93,11 +89,10 @@
             var id = "FirstStart";
             //Lance le compteur
             if (resultequipeautorise != null) {
-            	if (resultequipeautorise != false){ 
+            	if (resultequipeautorise != false) { 
             		//on execute la fonction dotimer présent dans le helper
                 	helper.doTimer(component, event, atelier, id); 
-            	}
-            	else {
+            	} else {
                     component.set("v.vTime", "00:00:00");
                     //récupere le composant button
                     var element = component.find("button");
@@ -113,8 +108,7 @@
                     $A.util.addClass(element1, 'slds-buttonstart');
                     component.set("v.vValue","FirstStart");
 				}
-            }
-            else {
+            } else {
                 component.set("v.vTime", "00:00:00");
                 //récupere le composant button
                 var element = component.find("button");
@@ -178,8 +172,7 @@
         		var vid;
         		if (id === "Start") {
                     vid = "Start";
-                }
-                else {
+                } else {
                 	//modifier la valeur dans valuestart par FirstStart
                 	vid = "FirstStart"; 
                 }

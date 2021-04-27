@@ -63,7 +63,7 @@
         var x = stopwatch || new clsStopwatch();
         var y = stopwatch || new clsStopwatch();
         //si la valeur recupérer est égal a FirstStart
-        if (vid === "FirstStart"){
+        if (vid === "FirstStart") {
             //déclaration d'une variable valuestp
             var valuestp;
             //déclaration d'une variable valuenticket
@@ -89,7 +89,7 @@
             //affiche le bouton stop
             $A.util.addClass(element1, 'slds-buttonstop');
             //fonction recuperation du numéro de ticket
-            function nticket(ticket){
+            function nticket(ticket) {
                 //execute la classe getNTicket
                 var vGetNTicket = component.get("c.getNTicket");
                 if (typeof vGetNTicket != 'undefined'){
@@ -105,10 +105,10 @@
                 }    
             }
             //fonction crée ou modifier le stp
-            function stp(ticket){
+            function stp(ticket) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
-                if (typeof vGetStp != 'undefined'){
+                if (typeof vGetStp != 'undefined') {
                     vGetStp.setParams({
                         "idObject" : ticket
                     });
@@ -131,7 +131,7 @@
                 }
         	}
             //fonction creation du stp
-        	function createstp(ticket){
+        	function createstp(ticket) {
                 //execute la fonction saveTime
             	var vSaveFunction = component.get("c.saveTime");
                 if (typeof vSaveFunction != 'undefined'){
@@ -144,7 +144,6 @@
                     vSaveFunction.setCallback(this, function(pResponse) {
                         //recupère l'etat du résultat et le stock dans la variable vState
                         var vState = pResponse.getState(); 
-                        console.log('############ vState ' + vState);
                     //on ferme la classe saveTime
                     });
                     $A.enqueueAction(vSaveFunction);
@@ -226,7 +225,7 @@
                 }
         	}
             //fonction enregistrement du temps
-            function save(time){
+            function save(time) {
                 //déclaration d'une variable vtime avec le temps a enregistré sois 1 min
             	var vTime = "00:01:00";
                 //execute la classe updateTime
@@ -241,7 +240,7 @@
                 }
             }
             //fonction message pour la notification
-            function mnotification(){
+            function mnotification() {
                 //déclaration d'une variable titre avec le contenue du titre pour la notification
                 var titre = "Travaillez-vous toujours sur le ticket " + valuenticket + " ?";
                 //déclaration d'une variable message notification avec le contenue du message
@@ -253,9 +252,9 @@
                 verouille();
             }
             
-            function verouille(){
+            function verouille() {
                 var vVerouille = component.get("c.updatetimerencours");
-                if (typeof vVerouille != 'undefined'){
+                if (typeof vVerouille != 'undefined') {
                 	vVerouille.setParams ({
                     	"timer" : true,
                          "idStp" : valuestp
@@ -265,9 +264,9 @@
                }
             }
    
-            function notification(){
+            function notification() {
                 //si le contenue de la variable message est égal a true
-                if (message === "true"){
+                if (message === "true") {
                     //execute la fonction mnotification
                     mnotification();
                     //remplace la valeur par false dans la variable message
@@ -280,7 +279,7 @@
                     //mise en forme du delai de la notification
                     var delaimax = formatTime(y.time());
                     //si le delai est égal a 1min
-                    if (delaimax === '00:01:00'){
+                    if (delaimax === '00:01:00') {
                         //on récupère l'id du ticket et on le met dans la variable idObject
                         var idObject = component.get("v.recordId");
                         //si type d'objet présent dans idObject est égal a undefined
@@ -364,10 +363,9 @@
                        		newtime = pad(s1, 1) + pad(s2, 1);
                             save(time);
                             ticketverouille(vticket);
-                          
                     	}
                         //si le timer[1] est supérieu ou égal a 10 mais inférieur a 19
-                    	if ((timer[1] >= 10) && (timer[1] < 19)){
+                    	if ((timer[1] >= 10) && (timer[1] < 19)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -376,7 +374,7 @@
                             ticketverouille(vticket);
                     	}
                         //si le timer[1] est égal a 19
-                        if (timer[1] == 19){
+                        if (timer[1] == 19) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 2;
                         	s2 = 0;
@@ -386,7 +384,7 @@
                             ticketverouille(vticket);
                     	}
                         //si le timer[1] est supérieu ou égal a 20 mais inférieur a 29
-                    	if ((timer[1] >= 20) && (timer[1] < 29)){
+                    	if ((timer[1] >= 20) && (timer[1] < 29)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -395,7 +393,7 @@
                             ticketverouille(vticket);
                     	}
                         //si le timer[1] est égal a 29
-                    	if (timer[1] == 29){
+                    	if (timer[1] == 29) {
                             //on met la variable s1 a 2 et la variable s2 a 0
                     		s1 = 3;
                     		s2 = 0;
@@ -414,7 +412,7 @@
                             ticketverouille(vticket);
                     	}
 
-                        if (timer[1] == 39){
+                        if (timer[1] == 39) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 4;
                         	s2 = 0;
@@ -424,7 +422,7 @@
                             ticketverouille(vticket);
                     	}
 
-                        if ((timer[1] >= 40) && (timer[1] < 49)){
+                        if ((timer[1] >= 40) && (timer[1] < 49)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -433,7 +431,7 @@
                             ticketverouille(vticket);
                     	}
 
-                        if (timer[1] == 49){
+                        if (timer[1] == 49) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 5;
                         	s2 = 0;
@@ -443,7 +441,7 @@
                             ticketverouille(vticket);
                     	}
 
-                        if ((timer[1] >= 50) && (timer[1] < 59)){
+                        if ((timer[1] >= 50) && (timer[1] < 59)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -475,7 +473,7 @@
             stp(vticket);
             //modifier la valeur dans valuestart par stop
             component.set("v.vValue","Stop");
-           	if (!stopwatch){
+           	if (!stopwatch) {
         		component.set("v.stopwatch", x);
         	}
             //initialise la fonction timer
@@ -484,7 +482,7 @@
             x.start();
         }
         //si la valeur recupérer est égal a Start
-        if (vid === "Start"){
+        if (vid === "Start") {
             //déclaration d'une variable s1 instencié a 0
             var s1 = 0;
             //déclaration d'une variable s2 instencié a 1
@@ -492,7 +490,7 @@
             //déclaration d'une variable newtime qui va permettre de comparer le temps
             var newtime = pad(s1, 1) + pad(s2, 1);
             //fonction ticketverouiller
-        	function ticketverouille(ticket){
+        	function ticketverouille(ticket) {
                 //execute la classe ticketverouiller
                 var vTicketVerouiller = component.get("c.ticketverouiller");
                 if (typeof vTicketVerouiller != 'undefined'){
@@ -502,7 +500,7 @@
                     //recupere le résultat
                 	vTicketVerouiller.setCallback(this, function(pResponseTicketVerouiller) {
                     	//si le résultat est différent de null
-                    	if (pResponseTicketVerouiller.getReturnValue() != null){
+                    	if (pResponseTicketVerouiller.getReturnValue() != null) {
                             //déclaration d'une variable avec le résultat récupérer
                             var ticketverouiller = (pResponseTicketVerouiller.getReturnValue()).split(':');
                             //on recupére le premier champ que l'on met dans la variable resulticketverouiller
@@ -544,10 +542,10 @@
                 }
         	}
             //fonction stp
-            function stp(ticket){
+            function stp(ticket) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
-                if (typeof vGetStp != 'undefined'){
+                if (typeof vGetStp != 'undefined') {
                     vGetStp.setParams({
                         "idObject" : ticket
                     });
@@ -568,10 +566,10 @@
                 }
         	}
    
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
-                if (typeof vUpdateTempsdeTravail != 'undefined'){
+                if (typeof vUpdateTempsdeTravail != 'undefined') {
                     vUpdateTempsdeTravail.setParams ({
                         "timer" : true,
                         "idStp" : stp
@@ -583,7 +581,7 @@
                 }
             }
      
-            function start(){
+            function start() {
                 //démarre le timer
                 x.reset();
                 x.start();
@@ -605,12 +603,12 @@
 			ticketverouille(vticket);
         }
         //si la valeur recupérer est égal a Stop
-        if (vid === "Stop"){
+        if (vid === "Stop") {
             //fonction stp
-            function stp(ticket){
+            function stp(ticket) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
-                if(typeof vGetStp != 'undefined'){
+                if (typeof vGetStp != 'undefined') {
                     vGetStp.setParams({
                         "idObject" : ticket
                     });
@@ -631,7 +629,7 @@
                 }
         	}
             //fonction updatetimer
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
                 if (typeof vUpdateTempsdeTravail != 'undefined'){
@@ -646,7 +644,7 @@
                 }
             }
    
-            function stop(){
+            function stop() {
                 //stop le timer
                 x.stop();
                 //récupere le composant button
@@ -670,7 +668,7 @@
             stp(vticket);
         }
         //si la valeur recupérer est égal a Oui
-        if (vid === "Yes"){
+        if (vid === "Yes") {
             //fonction ticketverouille
             function ticketverouille(ticket){
                 //execute la classe ticketverouiller
@@ -724,7 +722,7 @@
                 }
         	}
 
-            function stp(ticket){
+            function stp(ticket) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
                 if (typeof vGetStp != 'undefined'){
@@ -748,10 +746,10 @@
                 }
         	}
             //fonction updatetimer
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
-                if(typeof vUpdateTempsdeTravail != 'undefined'){
+                if (typeof vUpdateTempsdeTravail != 'undefined') {
                     vUpdateTempsdeTravail.setParams ({
                         "timer" : true,
                         "idStp" : stp

@@ -35,6 +35,7 @@
                 return lapTime + (startAt ? now() - startAt : 0);
             };
         };
+
         function pad(num, size) {
         	var s = "0000" + num;
             return s.substr(s.length - size);
@@ -62,7 +63,7 @@
         var x = stopwatch || new clsStopwatch();
         var y = stopwatch || new clsStopwatch();
         //si la valeur recupérer est égal a FirstStart
-        if(vid === "FirstStart"){
+        if (vid === "FirstStart") {
             //déclaration d'une variable valuestp
             var valuestp;
             //déclaration d'une variable valuentache
@@ -88,7 +89,8 @@
             //affiche le bouton stop
             $A.util.addClass(element1, 'slds-buttonstop');
             //fonction recuperation du numéro de tache
-            function ntache(tache){
+
+            function ntache(tache) {
                 //execute la classe getNTache
                 var vGetNTache = component.get("c.getNTache");
                 if (typeof vGetNTache != 'undefined'){
@@ -105,10 +107,10 @@
                 }    
             }
             //fonction crée ou modifier le stp
-            function stp(tache){
+            function stp(tache) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
-                if (typeof vGetStp != 'undefined'){
+                if (typeof vGetStp != 'undefined') {
                     vGetStp.setParams({
                         "idObject" : tache
                     });
@@ -122,9 +124,7 @@
                         if (vStateStp != null) {
                             //execute la fonction udpatestp avec en paramètre le numéro du stp
                             updatestp(vStateStp);
-                        }
-                        //sinon
-                        else {
+                        } else {
                             //execute la fonction createstp avec en paramètre l'id du tache
                             createstp(tache)
                         }
@@ -134,10 +134,10 @@
                 }
         	}
             //fonction creation du stp
-        	function createstp(tache){
+        	function createstp(tache) {
                 //execute la fonction saveTime
             	var vSaveFunction = component.get("c.saveTime");
-                if(typeof vSaveFunction != 'undefined'){
+                if (typeof vSaveFunction != 'undefined'){
                     vSaveFunction.setParams({
                         "stopwatch" : '00:00:00',
                         "idObject" : tache
@@ -147,17 +147,16 @@
                     vSaveFunction.setCallback(this, function(pResponse) {
                         //recupère l'etat du résultat et le stock dans la variable vState
                         var vState = pResponse.getState(); 
-                        console.log('############ vState ' + vState);
                     //on ferme la classe saveTime
                     });
                     $A.enqueueAction(vSaveFunction);
                 }
         	}
             //fonction mise a jour du stp
-        	function updatestp(stp){
+        	function updatestp(stp) {
                 //execute la classe updateTimeat0
             	var vUpdateFunction = component.get("c.updateTimeat0");
-                if(typeof vUpdateFunction != 'undefined'){
+                if (typeof vUpdateFunction != 'undefined'){
                     vUpdateFunction.setParams({                                     
                         "stopwatch" : '00:00:00',
                         "idStp" : stp
@@ -166,7 +165,7 @@
                     $A.enqueueAction(vUpdateFunction);
                     //execute la classe ResetTempsdeTravail
                     var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
-                    if(typeof vUpdateTempsdeTravail != 'undefined'){
+                    if (typeof vUpdateTempsdeTravail != 'undefined'){
                         vUpdateTempsdeTravail.setParams ({
                             "timer" : true,
                             "idStp" : stp
@@ -177,10 +176,10 @@
                 }
         	}
 
-        	function tacheverouille(tache){
+        	function tacheverouille(tache) {
                 //execute la classe tacheverouiller
                 var vTacheVerouiller = component.get("c.tacheverouiller");
-                if(typeof vTacheVerouiller != 'undefined'){
+                if (typeof vTacheVerouiller != 'undefined'){
                     vTacheVerouiller.setParams({
                         "idObject" : tache
                     });
@@ -213,9 +212,7 @@
                             //modifier la valeur dans valuestart par Start
                             component.set("v.vValue","Start");
                             x.stop();
-                    	}
-                        //sinon
-                        else {
+                    	} else {
                             //on recupere le composant timer
                             var element = component.find("timer");
                             //on affiche le composant
@@ -231,12 +228,12 @@
                 }
         	}
             //fonction enregistrement du temps
-            function save(time){
+            function save(time) {
                 //déclaration d'une variable vtime avec le temps a enregistré sois 1 min
             	var vTime = "00:01:00";
                 //execute la classe updateTime
                 var vUpdateFunction = component.get("c.updateTime");
-                if(typeof vUpdateFunction != 'undefined'){
+                if (typeof vUpdateFunction != 'undefined'){
                     vUpdateFunction.setParams({
                         "stopwatch" : vTime,
                          "idStp" : valuestp
@@ -246,7 +243,7 @@
                 }
             }
             //fonction message pour la notification
-            function mnotification(){
+            function mnotification() {
                 //déclaration d'une variable titre avec le contenue du titre pour la notification
                 var titre = "Travaillez-vous toujours sur cette tâche " + valuentache + " ?";
                 //déclaration d'une variable message notification avec le contenue du message
@@ -258,7 +255,7 @@
                 verouille();
             }
 
-            function verouille(){
+            function verouille() {
                 var vVerouille = component.get("c.updateTimerEncours");
                 if (typeof vVerouille != 'undefined'){
                 	vVerouille.setParams ({
@@ -270,7 +267,7 @@
                }
             }
        
-            function notification(){
+            function notification() {
                 //si le contenue de la variable message est égal a true
                 if (message === "true"){
                     //execute la fonction mnotification
@@ -292,9 +289,7 @@
                         if (typeof idObject === 'undefined') {
                             //stop la fonction notification
                             clearInterval(clockmax);
-                        }
-                        //sinon 
-                        else {
+                        } else {
                             //execute la fonction mnotification
                             mnotification();
                             //reset le timer de la notif
@@ -306,19 +301,15 @@
                 }
             }
          
-            function timemax(){
+            function timemax() {
                 //arret du timer
                 x.stop();
-                //déclaration d'une variable element
-                var element;
                 //récupére le composant dont l'aura:id est work
-                element = component.find("work");
+                var element = component.find("work");
                 //enleve la classe css valeur ce qui permet d'afficher l'element
                 $A.util.removeClass(element, 'valeur');
-                //déclaration d'une variable element
-                var element1;
                 //récupére le composant dont l'aura:id est timer
-                element1 = component.find("timer");
+                var element1 = component.find("timer");
                 //ajoute la classe css valeur ce qui permet de cacher l'element
                 $A.util.addClass(element1, 'valeur');
                 //initialise le timer de la notification
@@ -326,17 +317,17 @@
                 //démarre le timer
                 y.start();
             }
-            //fonction timer
-			function timer(){
+       
+			function timer() {
                 //envoie le résultat dans le composant v.vtime ce qui permet l'affichage du temps
         		component.set("v.vTime", formatTime(x.time()));
                 //recupere le temps en cours sur le composant v.vtime
                 time = component.get("v.vTime");
                 // si valuestp est égal null
-                if (valuestp == null){
+                if (valuestp == null) {
                     //execute la class getSuiviTime
                 	var vGetStp = component.get("c.getSuiviTime");
-                    if(typeof vGetStp != 'undefined'){
+                    if(typeof vGetStp != 'undefined') {
          				vGetStp.setParams({
             				"idObject" : vtache
           				});
@@ -352,14 +343,14 @@
                     }
                 }
                 //si le type contenue dans la varialbe time est différent de undefined
-                if (typeof time != "undefined"){
+                if (typeof time != "undefined") {
                     //on split le résultat récupérer dans la variable time
 					var timer = time.split(':');  
                     //si le temps contenue dans timer[1] est égal a newtime
                     var hh = 0;
-                	if (newtime == timer[1] || hh == 1){
+                	if (newtime == timer[1] || hh == 1) {
                         //si le timer[1] est inférieur a 9
-                		if (timer[1] < 9){
+                		if (timer[1] < 9) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -368,7 +359,7 @@
                             tacheverouille(vtache);
                     	}
                         //si le timer[1] est égal a 9
-                    	if (timer[1] == 9){
+                    	if (timer[1] == 9) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 1;
                         	s2 = 0;
@@ -378,7 +369,7 @@
                             tacheverouille(vtache);
                     	}
                         //si le timer[1] est supérieu ou égal a 10 mais inférieur a 19
-                    	if((timer[1] >= 10) && (timer[1] < 19)){
+                    	if ((timer[1] >= 10) && (timer[1] < 19)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -387,7 +378,7 @@
                             tacheverouille(vtache);
                     	}
                         //si le timer[1] est égal a 19
-                        if (timer[1] == 19){
+                        if (timer[1] == 19) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 2;
                         	s2 = 0;
@@ -397,7 +388,7 @@
                             tacheverouille(vtache);
                     	}
                         //si le timer[1] est supérieu ou égal a 20 mais inférieur a 29
-                    	if ((timer[1] >= 20) && (timer[1] < 29)){
+                    	if ((timer[1] >= 20) && (timer[1] < 29)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -405,8 +396,8 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est égal a 19
-                        if (timer[1] == 29){
+                        //si le timer[1] est égal a 29
+                        if (timer[1] == 29) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 3;
                         	s2 = 0;
@@ -415,8 +406,8 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est supérieu ou égal a 20 mais inférieur a 29
-                    	if ((timer[1] >= 30) && (timer[1] < 39)){
+                        //si le timer[1] est supérieu ou égal a 30 mais inférieur a 39
+                    	if ((timer[1] >= 30) && (timer[1] < 39)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -424,8 +415,8 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est égal a 19
-                        if (timer[1] == 39){
+                        //si le timer[1] est égal a 39
+                        if (timer[1] == 39) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 4;
                         	s2 = 0;
@@ -434,8 +425,8 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est supérieu ou égal a 20 mais inférieur a 29
-                    	if ((timer[1] >= 40) && (timer[1] < 49)){
+                        //si le timer[1] est supérieu ou égal a 40 mais inférieur a 49
+                    	if ((timer[1] >= 40) && (timer[1] < 49)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -443,8 +434,8 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est égal a 19
-                        if (timer[1] == 49){
+                        //si le timer[1] est égal a 49
+                        if (timer[1] == 49) {
                         	//on met la variable s1 a 1 et la variable s2 a 0
                     		s1 = 5;
                         	s2 = 0;
@@ -453,8 +444,8 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est supérieu ou égal a 20 mais inférieur a 29
-                    	if ((timer[1] >= 50) && (timer[1] < 59)){
+                        //si le timer[1] est supérieu ou égal a 50 mais inférieur a 59
+                    	if ((timer[1] >= 50) && (timer[1] < 59)) {
                             //on incrémente la variable s2
                     		s2 = s2 + 1;
                             //on met a jour la variable newtime
@@ -462,46 +453,22 @@
                             save(time);
                             tacheverouille(vtache);
                     	}
-                        //si le timer[1] est égal a 29
-                    	if (timer[1] == 59){
-                            //on met la variable s1 a 2 et la variable s2 a 0
-                    		s1 = 0;
-                    		s2 = 1;
-                            //on met a jour la variable newtime
-                    		newtime = pad(s1, 1) + pad(s2, 1);
-                            save(time);
-                    		//ntache(vtache);
-                            tacheverouille(vtache);
-                            //message = "true";
-                            timemax();
-                        }/*
-                        //si le timer[1] est égal a 29
-                    	if(timer[1] == 59){
-                            //on met la variable s1 a 2 et la variable s2 a 0
-                    		s1 = 0;
-                    		s2 = 1;
-                            //on met a jour la variable newtime
-                    		newtime = pad(s1, 1) + pad(s2, 1);
-                            save(time);
-                    		ntache(vtache);
-                            tacheverouille(vtache);
-                        }
-                        //si le timer[1] est égal a 30
-                    	if(timer[1] == 59){
-                            //on met la variable s1 a 0 et la variable s2 a 1
-                    		s1 = 0;
-                        	s2 = 1;
-                            //on met a jour la variable newtime
-                        	newtime = pad(s1, 1) + pad(s2, 1);
-                            save(time);
-                            //lance la fonction timemax
-                            message = "true";
-                            timemax();
-                    	}*/
+                        //si le timer[1] est égal a 59
+                    	// if (timer[1] == 59) {
+                        //     //on met la variable s1 a 2 et la variable s2 a 0
+                    	// 	s1 = 0;
+                    	// 	s2 = 1;
+                        //     //on met a jour la variable newtime
+                    	// 	newtime = pad(s1, 1) + pad(s2, 1);
+                        //     save(time);
+                    	// 	//ntache(vtache);
+                        //     //tacheverouille(vtache);
+                        //     message = "true";
+                        //     timemax();
+                        // }
                         //lance la fonction save
                     } 
-                }
-                else {
+                } else {
                     //stop la fonction timer
                 	clearInterval(clocktimer);
                 }
@@ -510,7 +477,7 @@
             stp(vtache);
             //modifier la valeur dans valuestart par stop
             component.set("v.vValue","Stop");
-           	if (!stopwatch){
+           	if (!stopwatch) {
         		component.set("v.stopwatch", x);
         	}
             //initialise la fonction timer
@@ -519,7 +486,7 @@
             x.start();
         }
         //si la valeur recupérer est égal a Start
-        if (vid === "Start"){
+        if (vid === "Start") {
             //déclaration d'une variable s1 instencié a 0
             var s1 = 0;
             //déclaration d'une variable s2 instencié a 1
@@ -527,10 +494,10 @@
             //déclaration d'une variable newtime qui va permettre de comparer le temps
             var newtime = pad(s1, 1) + pad(s2, 1);
             //fonction tacheverouiller
-        	function tacheverouille(tache){
+        	function tacheverouille(tache) {
                 //execute la classe tacheverouiller
                 var vTacheVerouiller = component.get("c.tacheverouiller");
-                if (typeof vTacheVerouiller != 'undefined'){
+                if (typeof vTacheVerouiller != 'undefined') {
                 	vTacheVerouiller.setParams({
                     	"idObject" : tache
                 	});
@@ -563,9 +530,7 @@
                             //modifier la valeur dans valuestart par Start
                             component.set("v.vValue","Start");
                             x.stop();
-                    	}
-                        //sinon
-                        else {
+                    	} else {
                             //on recupere le composant timer
                             var element = component.find("timer");
                             //on affiche le composant
@@ -580,11 +545,11 @@
                     $A.enqueueAction(vTacheVerouiller);
                 }
         	}
-            //fonction stp
-            function stp(tache){
+
+            function stp(tache) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
-                if(typeof vGetStp != 'undefined'){
+                if (typeof vGetStp != 'undefined'){
                     vGetStp.setParams({
                         "idObject" : tache
                     });
@@ -605,10 +570,10 @@
                 }
         	}
           
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
-                if(typeof vUpdateTempsdeTravail != 'undefined'){
+                if (typeof vUpdateTempsdeTravail != 'undefined'){
                     vUpdateTempsdeTravail.setParams ({
                         "timer" : true,
                         "idStp" : stp
@@ -620,7 +585,7 @@
                 }
             }
       
-            function start(){
+            function start() {
                 //démarre le timer
                 x.reset();
                 x.start();
@@ -641,12 +606,12 @@
 			tacheverouille(vtache);
         }
         //si la valeur recupérer est égal a Stop
-        if (vid === "Stop"){
+        if (vid === "Stop") {
             //fonction stp
             function stp(tache){
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
-                if(typeof vGetStp != 'undefined'){
+                if (typeof vGetStp != 'undefined'){
                     vGetStp.setParams({
                         "idObject" : tache
                     });
@@ -667,7 +632,7 @@
                 }
         	}
 
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
                 if (typeof vUpdateTempsdeTravail != 'undefined'){
@@ -682,7 +647,7 @@
                 }
             }
          
-            function stop(){
+            function stop() {
                 //stop le timer
                 x.stop();
                 //récupere le composant button
@@ -706,19 +671,19 @@
             stp(vtache);
         }
         //si la valeur recupérer est égal a Oui
-        if (vid === "Oui"){
+        if (vid === "Oui") {
             //fonction tacheverouille
             function tacheverouille(tache){
                 //execute la classe tacheverouiller
                 var vTacheVerouiller = component.get("c.tacheverouiller");
-                if(typeof vTacheVerouiller != 'undefined'){
+                if (typeof vTacheVerouiller != 'undefined') {
                     vTacheVerouiller.setParams({
                         "idObject" : tache
                     });
                     //recupère le resultat
                     vTacheVerouiller.setCallback(this, function(pResponseTacheVerouiller) {
                         //si le résultat est différent de null
-                        if(pResponseTacheVerouiller.getReturnValue() != null) {
+                        if (pResponseTacheVerouiller.getReturnValue() != null) {
                             //stock le résultat dans tacheverouiller
                             var tacheverouiller = (pResponseTacheVerouiller.getReturnValue()).split(':');
                             //stock le premiere résultat du tableau dans resultacheverouiller
@@ -744,9 +709,7 @@
                             //modifier la valeur dans valuestart par Start
                             component.set("v.vValue","Start");
                             x.stop();
-                        }
-                        //sinon
-                        else {
+                        } else {
                             //recupère le composant timer
                             var element = component.find("timer");
                             //affiche le composant
@@ -762,7 +725,7 @@
                 }
         	}
       
-            function stp(tache){
+            function stp(tache) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
                 if (typeof vGetStp != 'undefined'){
@@ -786,10 +749,10 @@
                 }
         	}
          
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
-                if (typeof vUpdateTempsdeTravail != 'undefined'){
+                if (typeof vUpdateTempsdeTravail != 'undefined') {
                     vUpdateTempsdeTravail.setParams ({
                         "timer" : true,
                         "idStp" : stp
@@ -801,7 +764,7 @@
                 }
             }
          
-            function oui(){
+            function oui() {
                 //reset du timer
                 x.reset();
                 //démarre le timer
@@ -821,8 +784,8 @@
             tacheverouille(vtache);
         }
         //Si la valeur recupérer est égal a Non
-        if (vid === "Non"){
-            function stp(tache){
+        if (vid === "Non") {
+            function stp(tache) {
                 //execute la classe getSuiviTime
         		var vGetStp = component.get("c.getSuiviTime");
                 if (typeof vGetStp != 'undefined'){
@@ -846,7 +809,7 @@
                 }
         	}
    
-            function updatetimer(stp){
+            function updatetimer(stp) {
                 //execute la classe ResetTempsdeTravail
                 var vUpdateTempsdeTravail = component.get("c.ResetTempsdeTravail");
             	vUpdateTempsdeTravail.setParams ({
@@ -859,7 +822,7 @@
                 non();
             }
      
-            function non(){
+            function non() {
                 //reset le timer
                 x.reset();
                 //recupere le composant
